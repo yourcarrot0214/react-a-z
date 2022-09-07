@@ -1,38 +1,47 @@
-.App {
-  text-align: center;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+  margin: auto;
+  max-width: 600px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.todoBlock {
+  padding: 30px;
+  margin-top: 50px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: -9px 17px 13px rgb(0 0 0 / 16%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.btnStyle {
+  color: #fff;
+  border: none;
+  padding: 5px 9px;
+  border-radius: 50%;
+  cursor: pointer;
+  float: right;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.todo-style {
+  padding: 10px;
+  border-bottom: 1px dotted #ccc;
+  text-decoration: none;
+}
+
+.completed-todo-style {
+  padding: 10px;
+  border-bottom: 1px dotted #ccc;
+  text-decoration: line-through;
+  color: #ccc;
+}
+
+.input-form {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input-form > input {
+  flex: 10;
+  padding: 5px;
 }
