@@ -7,7 +7,7 @@ class App extends React.Component {
     inputValue: "",
   };
   getId() {
-    return this.todos.length === 0
+    return this.state.todos.length === 0
       ? 0
       : this.state.todos[this.state.todos.length - 1].id + 1;
   }
