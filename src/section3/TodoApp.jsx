@@ -42,6 +42,8 @@ const reducer = (state, action) => {
   }
 };
 
+export const TodosContext = React.createContext(null);
+
 export default function TodoApp() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const nextId = useRef(0);
@@ -94,28 +96,30 @@ export default function TodoApp() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-blue-100">
-      <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-lg">
-        <div className="flex justify-between mb-3">
-          <h1 className="font-bold text-2xl">Todo List</h1>
-          <button
-            className="p-2 text-red-400 border-2 border-red-400 rounded hover:text-white hover:bg-red-200"
-            onClick={deleteAllTodo}
-          >
-            All Delete
-          </button>
+    <TodosContext.Provider value={dispatch}>
+      <div className="flex items-center justify-center w-screen h-screen bg-blue-100">
+        <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-lg">
+          <div className="flex justify-between mb-3">
+            <h1 className="font-bold text-2xl">Todo List</h1>
+            <button
+              className="p-2 text-red-400 border-2 border-red-400 rounded hover:text-white hover:bg-red-200"
+              onClick={deleteAllTodo}
+            >
+              All Delete
+            </button>
+          </div>
+          <TodoForm
+            addTodo={addTodo}
+            onChangeInputValue={onChangeInputValue}
+            inputValue={inputValue}
+          />
+          <TodoList
+            todos={todos}
+            toggleCompleted={toggleCompleted}
+            deleteTodo={deleteTodo}
+          />
         </div>
-        <TodoForm
-          addTodo={addTodo}
-          onChangeInputValue={onChangeInputValue}
-          inputValue={inputValue}
-        />
-        <TodoList
-          todos={todos}
-          toggleCompleted={toggleCompleted}
-          deleteTodo={deleteTodo}
-        />
       </div>
-    </div>
+    </TodosContext.Provider>
   );
 }
