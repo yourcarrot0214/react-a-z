@@ -1,9 +1,7 @@
-import React, { useCallback } from "react";
+import React from "react";
 
-const TodoItem = React.memo((props) => {
-  const { todo, toggleCompleted, deleteTodo } = props;
-  console.log(`${todo.content} render`);
-
+const TodoItem = React.memo(({ todo, toggleCompleted, deleteTodo }) => {
+  console.log(`${todo.content}`);
   return (
     <div key={todo.id}>
       <div className="flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 bg-gray-100 border rounded">

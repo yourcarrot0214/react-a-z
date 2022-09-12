@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 
 const TodoForm = React.memo((props) => {
   const [inputValue, setInputValue] = useState("");
 
-  const onChangeInputValue = (event) => {
-    setInputValue(event.target.value);
-  };
+  const onChangeInputValue = useCallback(
+    (event) => {
+      setInputValue(event.target.value);
+    },
+    [inputValue]
+  );
 
-  const addTodo = (event) => {
-    event.preventDefault();
-    if (inputValue === "") return;
+  const addTodo = useCallback(
+    (event) => {
+      event.preventDefault();
+      if (inputValue === "") return;
 
-    let newTodo = {
-      id: props.getNextTodoId(),
-      content: inputValue,
-      completed: false,
-    };
+      let newTodo = {
+        id: props.getNextTodoId(),
+        content: inputValue,
+        completed: false,
+      };
 
-    props.setTodos([...props.todos, newTodo]);
-    setInputValue("");
-  };
+      props.setTodos([...props.todos, newTodo]);
+      setInputValue("");
+    },
+    [inputValue]
+  );
 
   return (
     <form className="flex pt-2" onSubmit={addTodo}>

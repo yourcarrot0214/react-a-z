@@ -15,23 +15,17 @@ export default function TodoApp() {
     setTodos([]);
   }, []);
 
-  const toggleCompleted = useCallback(
-    (id) => {
-      setTodos(
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, completed: !todo.completed } : todo
-        )
-      );
-    },
-    [todos]
-  );
+  const toggleCompleted = useCallback((id) => {
+    setTodos((todos) =>
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  }, []);
 
-  const deleteTodo = useCallback(
-    (id) => {
-      setTodos(todos.filter((todo) => todo.id !== id));
-    },
-    [todos]
-  );
+  const deleteTodo = useCallback((id) => {
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+  }, []);
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-blue-100">
