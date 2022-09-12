@@ -1,30 +1,96 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useReducer, useRef } from "react";
 import "../App.css";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 
+const initialState = {
+  inputValue: "",
+  todos: [],
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_TODO":
+      return {
+        inputValue: "",
+        todos: state.todos.concat(action.newTodo),
+      };
+    case "CHANGE_INPUT":
+      return {
+        ...state,
+        inputValue: action.value,
+      };
+    case "TOGGLE_COMPLETED":
+      return {
+        ...state,
+        todos: state.todos.map((todo) =>
+          todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
+        ),
+      };
+    case "DELETE_TODO":
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo.id !== action.id),
+      };
+    case "DELETE_ALL_TODO":
+      return {
+        ...state,
+        todos: [],
+      };
+    default:
+      return state;
+  }
+};
+
 export default function TodoApp() {
-  const [todos, setTodos] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const nextId = useRef(0);
+  const { inputValue, todos } = state;
 
-  const getNextTodoId = useCallback(
-    () => (todos.length === 0 ? 0 : todos[todos.length - 1].id + 1),
-    [todos]
-  );
-
-  const deleteAllTodo = useCallback(() => {
-    setTodos([]);
+  const deleteAllTodo = useCallback((id) => {
+    dispatch({
+      type: "DELETE_TODO",
+    });
   }, []);
 
   const toggleCompleted = useCallback((id) => {
-    setTodos((todos) =>
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+    dispatch({
+      type: "TOGGLE_COMPLETED",
+      id: id,
+    });
   }, []);
 
   const deleteTodo = useCallback((id) => {
-    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+    dispatch({
+      type: "DELETE_TODO",
+      id: id,
+    });
+  }, []);
+
+  const addTodo = useCallback(
+    (event) => {
+      event.preventDefault();
+      if (state.inputValue === "") return;
+
+      let newTodo = {
+        id: nextId.current,
+        content: inputValue,
+        completed: false,
+      };
+      dispatch({
+        type: "ADD_TODO",
+        newTodo: newTodo,
+      });
+      nextId.current += 1;
+    },
+    [inputValue]
+  );
+
+  const onChangeInputValue = useCallback((event) => {
+    dispatch({
+      type: "CHANGE_INPUT",
+      value: event.target.value,
+    });
   }, []);
 
   return (
@@ -40,9 +106,9 @@ export default function TodoApp() {
           </button>
         </div>
         <TodoForm
-          todos={todos}
-          setTodos={setTodos}
-          getNextTodoId={getNextTodoId}
+          addTodo={addTodo}
+          onChangeInputValue={onChangeInputValue}
+          inputValue={inputValue}
         />
         <TodoList
           todos={todos}

@@ -1,32 +1,6 @@
 import React, { useState, useCallback } from "react";
 
-const TodoForm = React.memo((props) => {
-  const [inputValue, setInputValue] = useState("");
-
-  const onChangeInputValue = useCallback(
-    (event) => {
-      setInputValue(event.target.value);
-    },
-    [inputValue]
-  );
-
-  const addTodo = useCallback(
-    (event) => {
-      event.preventDefault();
-      if (inputValue === "") return;
-
-      let newTodo = {
-        id: props.getNextTodoId(),
-        content: inputValue,
-        completed: false,
-      };
-
-      props.setTodos([...props.todos, newTodo]);
-      setInputValue("");
-    },
-    [inputValue]
-  );
-
+const TodoForm = React.memo(({ addTodo, onChangeInputValue, inputValue }) => {
   return (
     <form className="flex pt-2" onSubmit={addTodo}>
       <input
