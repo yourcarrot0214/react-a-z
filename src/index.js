@@ -5,9 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 // * Section Root App
 import TodoApp from "./section3/TodoApp";
+import WhatThe from "./section3/WhatThe";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<TodoApp />);
+root.render(<App />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
