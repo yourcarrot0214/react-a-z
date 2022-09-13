@@ -2,10 +2,14 @@ import React from "react";
 import "./App.css";
 
 class App extends React.Component {
-  state = {
-    todos: [],
-    inputValue: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      todos: [],
+      inputValue: "",
+    };
+  }
+
   getId() {
     return this.state.todos.length === 0
       ? 0
