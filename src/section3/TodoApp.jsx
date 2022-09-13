@@ -6,26 +6,20 @@ import TodoList from "./components/TodoList";
 export default function TodoApp() {
   const [todos, setTodos] = useState([]);
 
-  const getNextTodoId = useCallback(
-    () => (todos.length === 0 ? 0 : todos[todos.length - 1].id + 1),
-    [todos]
-  );
+  const getNextTodoId = () =>
+    todos.length === 0 ? 0 : todos[todos.length - 1].id + 1;
 
-  const deleteAllTodo = useCallback(() => {
-    setTodos([]);
-  }, []);
+  const deleteAllTodo = () => setTodos([]);
 
-  const toggleCompleted = useCallback((id) => {
+  const toggleCompleted = (id) =>
     setTodos((todos) =>
       todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
-  }, []);
 
-  const deleteTodo = useCallback((id) => {
-    setTodos((todos) => todos.filter((todo) => todo.id !== id));
-  }, []);
+  const deleteTodo = (id) =>
+    setTodos((todos) => todos.filter((todo) => todo.id !== todo));
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-blue-100">

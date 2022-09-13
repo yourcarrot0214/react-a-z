@@ -10,22 +10,19 @@ const TodoForm = React.memo((props) => {
     [inputValue]
   );
 
-  const addTodo = useCallback(
-    (event) => {
-      event.preventDefault();
-      if (inputValue === "") return;
+  const addTodo = (event) => {
+    event.preventDefault();
+    if (inputValue === "") return;
 
-      let newTodo = {
-        id: props.getNextTodoId(),
-        content: inputValue,
-        completed: false,
-      };
+    let newTodo = {
+      id: props.getNextTodoId(),
+      content: inputValue,
+      completed: false,
+    };
 
-      props.setTodos([...props.todos, newTodo]);
-      setInputValue("");
-    },
-    [inputValue]
-  );
+    props.setTodos([...props.todos, newTodo]);
+    setInputValue("");
+  };
 
   return (
     <form className="flex pt-2" onSubmit={addTodo}>
