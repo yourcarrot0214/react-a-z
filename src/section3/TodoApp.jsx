@@ -19,7 +19,7 @@ export default function TodoApp() {
     );
 
   const deleteTodo = (id) =>
-    setTodos((todos) => todos.filter((todo) => todo.id !== todo));
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-blue-100">
